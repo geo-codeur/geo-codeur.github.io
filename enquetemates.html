@@ -212,9 +212,7 @@
       /* Version mobile - empilement vertical */
       @media (max-width: 500px) {
         .search-container {
-          width: calc(
-            100% - 140px
-          ); /* Laisser de la place pour les contrôles */
+          width: calc(100% - 140px);
           left: 10px;
           top: 10px;
           transform: none;
@@ -247,7 +245,8 @@
           top: 10px;
         }
       }
-      Modification du grid-item existant .grid-item {
+      /* Modification du grid-item existant  */
+      .grid-item {
         background: #f0f4f8;
         padding: 8px 12px;
         border-radius: 6px;
@@ -256,8 +255,7 @@
         justify-content: space-between;
         align-items: center;
       }
-
-      .selection-text {
+      */ .selection-text {
         flex: 1;
       }
       .search-container {
@@ -288,7 +286,7 @@
         box-shadow: 0 0 0 2px rgba(75, 108, 183, 0.2);
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 400px) {
         .search-container {
           width: 200px;
           top: 60px; /* Pour éviter le chevauchement avec les autres contrôles */
@@ -320,7 +318,7 @@
         width: auto;
       }
 
-      @media (max-width: 500px) {
+      @media (max-width: 400px) {
         .map-instructions {
           font-size: 0.65rem;
           padding: 10px;
@@ -338,7 +336,7 @@
         }
       }
 
-      @media (max-width: 480px) {
+      @media (max-width: 300px) {
         .map-instructions {
           font-size: 0.6rem;
           padding: 8px;
@@ -379,7 +377,7 @@
       }
 
       /* Version tablette */
-      @media (max-width: 768px) {
+      @media (max-width: 500px) {
         .grid-item {
           flex: 1 1 calc(50% - 10px);
           font-size: 0.85rem;
@@ -388,7 +386,7 @@
       }
 
       /* Version mobile */
-      @media (max-width: 480px) {
+      @media (max-width: 200px) {
         .grid-info {
           flex-direction: column;
           gap: 8px;
@@ -414,7 +412,7 @@
       }
 
       /* Version très petit mobile */
-      @media (max-width: 360px) {
+      @media (max-width: 100px) {
         .grid-item {
           padding: 6px 8px;
           font-size: 0.75rem;
@@ -623,14 +621,67 @@
           </div>
           <img src="./assets/logoUtc.png" alt="Logo" class="logo" />
         </div>
-        <p class="description">
-          Bonjour, nous sommes un groupe de recherche étudiant qui travaille sur
-          la question du bien-être sur les territoires. Nous vous proposons ici,
-          un questionnaire qui a pour but d’en apprendre plus sur la manière
-          dont vous appréciez le bien-être et le territoire. Ce questionnaire
-          est anonyme, les réponses que vous nous apportez nous permettent
-          d’avoir un premier aperçu général pour les habitants du territoire.
-        </p>
+        <div class="description">
+          <p>
+            <strong>Bonjour,</strong> Nous sommes un groupe d’étudiants en Génie
+            Urbain à l’Université de Technologie de Compiègne (UTC). Dans le
+            cadre de notre Atelier Projet (AP), encadré par les
+            Enseignants-Chercheurs M. Maxime Hachette, Mme Nathalie Molines et
+            Mme Selma Baati, nous réalisons une étude sur le bien-être et ses
+            conditions déterminantes sur le territoire.
+          </p>
+
+          <p>
+            <strong>Contexte de l'étude</strong> Ce travail s’inscrit dans le
+            projet de recherche MATES for Well-being (Multiscale Assessment and
+            Territorial Equilibrium Simulation for Well-being), qui vise à mieux
+            comprendre comment les dimensions sociales, économiques,
+            environnementales et institutionnelles d’un territoire influencent
+            le bien-être des habitants.
+          </p>
+
+          <p>
+            <strong>Objectif du questionnaire</strong> À travers ce
+            questionnaire, nous souhaitons recueillir votre ressenti sur votre
+            cadre de vie et identifier les facteurs qui contribuent ou freinent
+            le bien-être au quotidien dans votre territoire.
+          </p>
+
+          <p>
+            <strong>Confidentialité</strong> Votre participation est entièrement
+            volontaire et anonyme. Aucune donnée permettant de vous identifier
+            ne sera collectée, et vos réponses seront analysées uniquement dans
+            un cadre universitaire et scientifique.
+          </p>
+
+          <p>
+            <strong>Durée et instructions</strong> Le questionnaire dure environ
+            20 à 25 minutes. Il n’y a ni bonne ni mauvaise réponse : nous vous
+            invitons simplement à partager votre expérience et votre ressenti
+            personnel.
+          </p>
+
+          <p>
+            <strong>Contacts</strong> <br />• Pour le questionnaire : [Prénom
+            Nom – adresse mail] <br />• Pour le projet MATES for Well-being : M.
+            Maxime Hachette (maxime.hachette@utc.fr)
+          </p>
+
+          <p>
+            <strong>Résultats</strong> À la fin de l'enquête, si vous le
+            souhaitez, vous pourrez nous recontacter afin de recevoir une
+            synthèse des résultats de cette étude.
+          </p>
+
+          <p>
+            Votre participation est précieuse pour notre travail. Elle
+            contribuera à une meilleure compréhension du bien-être territorial
+            et à la réflexion sur des territoires plus durables, équilibrés et
+            inclusifs.
+          </p>
+
+          <p>Merci beaucoup pour votre temps et votre contribution.</p>
+        </div>
       </header>
 
       <div class="form-container">
