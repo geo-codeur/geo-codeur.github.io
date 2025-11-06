@@ -137,6 +137,48 @@
         margin-bottom: 20px;
       }
 
+      /* Bouton d'annulation */
+      .cancel-btn {
+        display: inline-block;
+        margin-left: 10px;
+        padding: 4px 10px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.2s;
+      }
+
+      .cancel-btn:hover {
+        background: #c82333;
+        transform: scale(1.05);
+      }
+
+      .cancel-btn:active {
+        transform: scale(0.95);
+      }
+
+      .cancel-btn-hidden {
+        display: none;
+      }
+
+      /* Modification du grid-item existant */
+      .grid-item {
+        background: #f0f4f8;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .selection-text {
+        flex: 1;
+      }
+
       #map {
         width: 100%;
         height: 100%;
@@ -421,7 +463,13 @@
           <h2>Questions territoriales</h2>
 
           <div class="form-group">
-            <label>Veuillez sélectionner sur la carte trois zones:</label>
+            <label
+              >la carte ci dessous présente un carroyage de l’ARC. Veuillez
+              sélectionner un carreaux correspondant à votre lieu d’habitation,
+              ensuite choisissez un ou plusieurs carreaux correspondant à une ou
+              des zones dans lesquelles vous considérez que vous vous sentez
+              bien ou non. :</label
+            >
             <div class="current-selection">
               <h3>Sélections actuelles</h3>
               <div class="grid-info">
@@ -429,16 +477,31 @@
                   <strong>Habitation:</strong><br />
                   <span id="selected-habitation">Aucune sélection</span>
                   <div id="habitation-coords" class="coordinates"></div>
+                  <button
+                    id="cancel-habitation"
+                    class="cancel-btn cancel-btn-hidden"
+                  >
+                    Annuler
+                  </button>
                 </div>
                 <div class="grid-item">
                   <strong>Se sent bien:</strong><br />
                   <span id="selected-bien">Aucune sélection</span>
                   <div id="bien-coords" class="coordinates"></div>
+                  <button id="cancel-bien" class="cancel-btn cancel-btn-hidden">
+                    Annuler
+                  </button>
                 </div>
                 <div class="grid-item">
                   <strong>Ne se sent pas bien:</strong><br />
                   <span id="selected-pas-bien">Aucune sélection</span>
                   <div id="pas-bien-coords" class="coordinates"></div>
+                  <button
+                    id="cancel-pas-bien"
+                    class="cancel-btn cancel-btn-hidden"
+                  >
+                    Annuler
+                  </button>
                 </div>
               </div>
             </div>
@@ -446,7 +509,8 @@
 
           <div class="form-group">
             <label for="commentaire"
-              >Commentaires supplémentaires (optionnel)</label
+              >Vous pouvez développer les raisons de vos choix
+              (optionnel)</label
             >
             <textarea
               id="commentaire"
@@ -1010,6 +1074,73 @@
           link.href = LIMESURVEY_URL;
         });
       }
+      // 🧹 Fonction pour annuler une sélection spécifique
+      function handleCancelSelection(type) {
+        gridData.forEach((item) => {
+          if (type === "habitation" && item.habitation) {
+            item.habitation = false;
+            updateCellAppearance(item);
+          }
+          if (type === "bien" && item.bien) {
+            item.bien = false;
+            updateCellAppearance(item);
+          }
+          if (type === "pas-bien" && item.pasBien) {
+            item.pasBien = false;
+            updateCellAppearance(item);
+          }
+        });
+
+        updateSelectionDisplay();
+      }
+
+      // 🎛️ Attacher les événements aux boutons d'annulation
+      function setupCancelButtons() {
+        document
+          .getElementById("cancel-habitation")
+          .addEventListener("click", () => handleCancelSelection("habitation"));
+        document
+          .getElementById("cancel-bien")
+          .addEventListener("click", () => handleCancelSelection("bien"));
+        document
+          .getElementById("cancel-pas-bien")
+          .addEventListener("click", () => handleCancelSelection("pas-bien"));
+      }
+
+      // 🧩 Modifier updateSelectionDisplay pour afficher/masquer les boutons
+      const oldUpdateSelectionDisplay = updateSelectionDisplay;
+      updateSelectionDisplay = function () {
+        oldUpdateSelectionDisplay(); // exécuter la version originale
+
+        // Gestion des boutons d'annulation
+        const habitationSelected = Array.from(gridData.values()).some(
+          (item) => item.habitation
+        );
+        const bienSelected = Array.from(gridData.values()).some(
+          (item) => item.bien
+        );
+        const pasBienSelected = Array.from(gridData.values()).some(
+          (item) => item.pasBien
+        );
+
+        document
+          .getElementById("cancel-habitation")
+          .classList.toggle("cancel-btn-hidden", !habitationSelected);
+        document
+          .getElementById("cancel-bien")
+          .classList.toggle("cancel-btn-hidden", !bienSelected);
+        document
+          .getElementById("cancel-pas-bien")
+          .classList.toggle("cancel-btn-hidden", !pasBienSelected);
+      };
+
+      // 🪄 Initialiser les boutons d'annulation après le chargement
+      document.addEventListener("DOMContentLoaded", function () {
+        initMap();
+        setupSelectionButtons();
+        setupCancelButtons(); // nouvelle fonction ici ✅
+        updateLimesurveyLinks();
+      });
 
       // Initialisation
       document.addEventListener("DOMContentLoaded", function () {
