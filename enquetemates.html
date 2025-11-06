@@ -10,6 +10,12 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
+    <!-- Leaflet Geocoder (barre de recherche) -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+    />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
       * {
@@ -164,8 +170,84 @@
         display: none;
       }
 
-      /* Modification du grid-item existant */
-      .grid-item {
+      .search-container {
+        position: relative;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: transparent;
+        padding: 10px;
+        border-radius: 6px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        max-width: calc(100% - 40px);
+      }
+
+      .map-instructions {
+        position: relative;
+        top: 70px; /* Commence sous la barre de recherche */
+        left: 10px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        max-width: min(250px, calc(100vw - 40px));
+        width: auto;
+      }
+
+      .selection-controls {
+        position: absolute;
+        top: 70px; /* Aligné avec les instructions */
+        right: 10px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 10px;
+        border-radius: 6px;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Version mobile - empilement vertical */
+      @media (max-width: 500px) {
+        .search-container {
+          width: calc(
+            100% - 140px
+          ); /* Laisser de la place pour les contrôles */
+          left: 10px;
+          top: 10px;
+          transform: none;
+        }
+
+        .map-instructions {
+          top: 70px;
+          left: 10px;
+          max-width: calc(100% - 150px); /* S'adapter à l'espace disponible */
+        }
+
+        .selection-controls {
+          top: 10px;
+          right: 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .search-container {
+          width: calc(100% - 120px);
+        }
+
+        .map-instructions {
+          top: 70px;
+          max-width: calc(100% - 130px);
+          font-size: 0.6rem;
+        }
+
+        .selection-controls {
+          top: 10px;
+        }
+      }
+      Modification du grid-item existant .grid-item {
         background: #f0f4f8;
         padding: 8px 12px;
         border-radius: 6px;
@@ -178,7 +260,47 @@
       .selection-text {
         flex: 1;
       }
+      .search-container {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: transparent;
+        padding: 10px;
+        border-radius: 6px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        max-width: calc(100% - 40px);
+      }
 
+      .search-box {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #4b6cb7;
+        box-shadow: 0 0 0 2px rgba(75, 108, 183, 0.2);
+      }
+
+      @media (max-width: 768px) {
+        .search-container {
+          width: 200px;
+          top: 60px; /* Pour éviter le chevauchement avec les autres contrôles */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .search-container {
+          width: 200px;
+          top: 70px;
+        }
+      }
       #map {
         width: 100%;
         height: 100%;
@@ -198,7 +320,7 @@
         width: auto;
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 500px) {
         .map-instructions {
           font-size: 0.65rem;
           padding: 10px;
@@ -248,10 +370,63 @@
         padding: 8px 12px;
         border-radius: 6px;
         font-size: 0.9rem;
+        flex: 1 1 calc(33.333% - 10px);
+        min-width: 120px;
       }
 
       .grid-item strong {
         color: #4b6cb7;
+      }
+
+      /* Version tablette */
+      @media (max-width: 768px) {
+        .grid-item {
+          flex: 1 1 calc(50% - 10px);
+          font-size: 0.85rem;
+          padding: 6px 10px;
+        }
+      }
+
+      /* Version mobile */
+      @media (max-width: 480px) {
+        .grid-info {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .grid-item {
+          flex: 1 1 100%;
+          font-size: 0.8rem;
+          padding: 8px 10px;
+          text-align: center;
+        }
+
+        .grid-item strong {
+          display: block;
+          margin-bottom: 4px;
+          font-size: 0.85rem;
+        }
+
+        .coordinates {
+          font-size: 0.75rem;
+          margin-top: 2px;
+        }
+      }
+
+      /* Version très petit mobile */
+      @media (max-width: 360px) {
+        .grid-item {
+          padding: 6px 8px;
+          font-size: 0.75rem;
+        }
+
+        .grid-item strong {
+          font-size: 0.8rem;
+        }
+
+        .coordinates {
+          font-size: 0.7rem;
+        }
       }
 
       .coordinates {
@@ -464,11 +639,12 @@
 
           <div class="form-group">
             <label
-              >la carte ci dessous présente un carroyage de l’ARC. Veuillez
-              sélectionner un carreaux correspondant à votre lieu d’habitation,
-              ensuite choisissez un ou plusieurs carreaux correspondant à une ou
-              des zones dans lesquelles vous considérez que vous vous sentez
-              bien ou non. :</label
+              >la carte ci dessous présente un carroyage de l’ARC (Agglomération
+              de la Région de Compiègne). Veuillez sélectionner un carreaux
+              correspondant à votre lieu d’habitation, ensuite choisissez un ou
+              plusieurs carreaux correspondant à une ou des zones dans
+              lesquelles vous considérez que vous vous sentez bien ou non.
+              :</label
             >
             <div class="current-selection">
               <h3>Sélections actuelles</h3>
@@ -529,6 +705,20 @@
             ></span>
           </button>
 
+          <p
+            style="
+              text-align: center;
+              margin-top: 15px;
+              color: #666;
+              font-size: 0.9rem;
+              line-height: 1.4;
+            "
+          >
+            Veuillez continuer à remplir le formulaire en cliquant sur
+            <strong>"Accéder au questionnaire Limesurvey"</strong> en bas de la
+            page
+          </p>
+
           <div id="success-message" class="success-message">
             Merci d'avoir participé à notre enquête ! Vos réponses ont été
             enregistrées avec succès.
@@ -542,6 +732,15 @@
       </div>
 
       <div class="map-container">
+        <!-- Barre de recherche -->
+        <div class="search-container">
+          <input
+            type="text"
+            id="search-box"
+            class="search-box"
+            placeholder="Rechercher un lieu..."
+          />
+        </div>
         <div class="map-instructions">
           <strong>Instructions :</strong>
           <ol>
@@ -699,7 +898,9 @@
       // Initialisation de la carte
       function initMap() {
         // Centrer sur une zone par défaut (sera ajustée après chargement des données)
-        map = L.map("map").setView([48.8566, 2.3522], 13);
+        map = L.map("map", {
+          zoomControl: false, // Désactive complètement les contrôles de zoom
+        }).setView([48.8566, 2.3522], 13);
 
         // Ajouter la couche Google Maps Hybrid
         L.tileLayer("https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}", {
@@ -708,6 +909,9 @@
           attribution:
             '&copy; <a href="https://maps.google.com">Google Maps</a>',
         }).addTo(map);
+
+        // Initialiser la barre de recherche
+        initSearch();
         // Charger les données GeoJSON
         loadGeoJSONData();
 
@@ -715,6 +919,93 @@
         updateSelectionDisplay();
       }
 
+      // Initialiser la barre de recherche
+      function initSearch() {
+        const searchBox = document.getElementById("search-box");
+
+        // Utiliser le service de géocodage de Leaflet avec Nominatim (OpenStreetMap)
+        searchBox.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const query = searchBox.value.trim();
+            if (query) {
+              searchLocation(query);
+            }
+          }
+        });
+      }
+
+      // Fonction de recherche de lieu
+      function searchLocation(query) {
+        // Utiliser le service Nominatim d'OpenStreetMap pour la recherche
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          query
+        )}&limit=5`;
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.length > 0) {
+              const result = data[0];
+              const lat = parseFloat(result.lat);
+              const lon = parseFloat(result.lon);
+
+              // Centrer la carte sur le résultat
+              map.setView([lat, lon], 15);
+
+              // Supprimer l'ancien marqueur s'il existe
+              removeSearchMarker();
+
+              // Ajouter un nouveau marqueur
+              window.searchMarker = L.marker([lat, lon])
+                .addTo(map)
+                .bindPopup(`<b>${result.display_name}</b>`)
+                .openPopup();
+
+              // Mettre à jour la barre de recherche avec le nom du lieu
+              document.getElementById("search-box").value =
+                result.display_name.split(",")[0];
+
+              // Fermer le popup quand on clique sur la carte
+              setupMapClickHandler();
+            } else {
+              alert("Lieu non trouvé. Essayez avec un nom plus spécifique.");
+            }
+          })
+          .catch((error) => {
+            console.error("Erreur de recherche:", error);
+            alert("Erreur lors de la recherche. Veuillez réessayer.");
+          });
+      }
+
+      // Fonction pour supprimer le marqueur de recherche
+      function removeSearchMarker() {
+        if (window.searchMarker) {
+          map.removeLayer(window.searchMarker);
+          window.searchMarker = null;
+        }
+      }
+
+      // Fonction pour gérer les clics sur la carte
+      function setupMapClickHandler() {
+        // Supprimer l'ancien gestionnaire d'événement s'il existe
+        if (window.mapClickHandler) {
+          map.off("click", window.mapClickHandler);
+        }
+
+        // Ajouter un nouveau gestionnaire d'événement
+        window.mapClickHandler = function (e) {
+          removeSearchMarker();
+
+          // Réactiver les clics sur les carroyages
+          gridData.forEach((cellData) => {
+            cellData.layer.on("click", function (e) {
+              handleGridClick(cellData);
+            });
+          });
+        };
+
+        map.on("click", window.mapClickHandler);
+      }
       // Charger les données GeoJSON
       async function loadGeoJSONData() {
         const loadingOverlay = document.getElementById("map-loading");
