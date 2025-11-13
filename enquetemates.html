@@ -396,6 +396,66 @@
   font-size: 14px;
   display: none;
 }
+/* FOOTER */
+.site-footer {
+  background: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  padding: 20px 0;
+  margin-top: 2rem;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-logo .logo {
+  height: 40px;
+  width: auto;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.footer-logo .logo:hover {
+  opacity: 1;
+}
+
+.footer-text {
+  text-align: center;
+}
+
+.footer-text p {
+  margin: 2px 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.footer-text p:first-child {
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Version responsive */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .footer-logo .logo {
+    height: 35px;
+  }
+  
+  .footer-text p {
+    font-size: 0.8rem;
+  }
+}
     </style>
   </head>
   <body>
@@ -1100,5 +1160,17 @@ document
         console.log("✅ Application prête !");
       });
     </script>
+    <!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <img src="./assets/logo_anr.webp" alt="Logo" class="logo">
+    </div>
+    <div class="footer-text">
+      <p>&copy; 2025 UTC. Tous droits réservés.</p>
+      <p>Action soutenue par ANR au titre de l'Idex Super</p>
+    </div>
+  </div>
+</footer>
   </body>
 </html>
