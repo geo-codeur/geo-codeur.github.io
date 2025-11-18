@@ -693,7 +693,7 @@
       // ========================================
       // CONFIGURATION
       // ========================================
-      const GEOJSON_URL_MAP1 = "CarroyageMaj.geojson";
+      const GEOJSON_URL_MAP1 = "ARC200_200.geojson";
       const GEOJSON_URL_MAP2 = "grilleARC1kmx1.geojson";
 
       // SUPABASE
@@ -1086,6 +1086,7 @@ document
         pas_bien: pasBienCells.map((item) => createCombinedText(item)),
         submitted_at: new Date().toISOString(),
       };
+      
 
       console.log("📤 Données à envoyer:", formData);
 
@@ -1106,7 +1107,7 @@ document
       // SUCCÈS - Redirection vers le lien
       submitText.textContent = "Redirection...";
       successMessage.style.display = "block";
-      successMessage.textContent = "✅ Enquête soumise avec succès ! Redirection...";
+      successMessage.textContent = "✅ Page suivante";
 
       // Redirection après un court délai
       setTimeout(() => {
