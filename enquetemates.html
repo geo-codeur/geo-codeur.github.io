@@ -471,7 +471,7 @@
           </p>
 
           <p>
-            Le questionnaire dure environ 20 à 25 minutes. Il n'y a ni bonne ni
+            Le questionnaire dure environ 10 à 15 minutes. Il n'y a ni bonne ni
             mauvaise réponse : nous vous invitons simplement à partager votre
             expérience et votre ressenti personnel.
           </p>
@@ -1129,6 +1129,9 @@ document
       const habitationCompiegne = document.getElementById('habitation-compiegne').value;
       const quartier = document.getElementById('quartier').value;
       const commune = document.getElementById('commune').value;
+      // Ajouter 1 heure pour compenser le décalage UTC
+      const now = new Date();
+      const adjustedDate = new Date(now.getTime() + (60 * 60 * 1000)); // +1 heure
 
       const formData = {
         commentaire: document.getElementById("commentaire").value || null,
@@ -1139,7 +1142,7 @@ document
           habitationCells.length > 0
             ? createCombinedText(habitationCells[0])
             : null,
-        submitted_at: new Date().toISOString(),
+        submitted_at: adjustedDate.toISOString(),
       };
       
 
