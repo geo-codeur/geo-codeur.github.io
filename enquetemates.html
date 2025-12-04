@@ -90,7 +90,7 @@
         color: #555;
       }
 
-      select, textarea {
+      select, textarea, input[type="text"] {
         width: 100%;
         padding: 12px;
         border: 1px solid #ddd;
@@ -100,7 +100,7 @@
         margin-bottom: 15px;
       }
 
-      select:focus, textarea:focus {
+      select:focus, textarea:focus, input[type="text"]:focus {
         border-color: #4b6cb7;
         outline: none;
         box-shadow: 0 0 0 2px rgba(80, 107, 172, 0.2);
@@ -426,11 +426,53 @@
   margin-bottom: 20px;
   border-left: 4px solid #4b6cb7;
 }
+
+.radio-group {
+  margin-bottom: 15px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio-option input[type="radio"] {
+  margin-right: 10px;
+}
+
+.radio-option label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.no-response-option {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+}
+
+.no-response-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.no-response-checkbox input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.no-response-checkbox label {
+  margin-bottom: 0;
+  font-style: italic;
+  color: #666;
+}
     </style>
   </head>
   <body>
     <div class="container">
-         <header>
+      <header>
         <div class="header-content">
           <div class="header-text">
             <h1>Enquête sur le bien-être sur le territoire compiègnois</h1>
@@ -535,33 +577,62 @@
               </select>
             </div>
 
-            <!-- COMMUNES AUTOUR DE COMPIÈGNE (caché par défaut) -->
-            <div id="communes-section" class="form-group hidden">
-              <label for="commune">Sélectionnez votre commune :</label>
-              <select id="commune" name="commune">
-                <option value="">-- Sélectionnez une commune --</option>
-                <option value="Armancourt">Armancourt</option>
-                <option value="Béthisy-Saint-Martin">Béthisy-Saint-Martin</option>
-                <option value="Béthisy-Saint-Pierre">Béthisy-Saint-Pierre</option>
-                <option value="Bienville">Bienville</option>
-                <option value="Choisy-au-Bac">Choisy-au-Bac</option>
-                <option value="Clairoix">Clairoix</option>
-                <option value="Janville">Janville</option>
-                <option value="Jaux">Jaux</option>
-                <option value="Jonquières">Jonquières</option>
-                <option value="Lachelle">Lachelle</option>
-                <option value="Lacroix-Saint-Ouen">Lacroix-Saint-Ouen</option>
-                <option value="Le Meux">Le Meux</option>
-                <option value="Margny-lès-Compiègne">Margny-lès-Compiègne</option>
-                <option value="Néry">Néry</option>
-                <option value="Saint-Jean-aux-Bois">Saint-Jean-aux-Bois</option>
-                <option value="Saint-Sauveur">Saint-Sauveur</option>
-                <option value="Saint-Vaast-de-Longmont">Saint-Vaast-de-Longmont</option>
-                <option value="Saintines">Saintines</option>
-                <option value="Venette">Venette</option>
-                <option value="Verberie">Verberie</option>
-                <option value="Vieux-Moulin">Vieux-Moulin</option>
-              </select>
+            <!-- CHOIX POUR LES PERSONNES HORS COMPIÈGNE (caché par défaut) -->
+            <div id="non-compiegne-section" class="form-group hidden">
+              <div class="radio-group">
+                <label>Votre lieu d'habitation est :</label>
+                <div class="radio-option">
+                  <input type="radio" id="option-arc" name="location-type" value="arc">
+                  <label for="option-arc">Dans l'ARC (Agglomération de la Région de Compiègne)</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="option-hors-arc" name="location-type" value="hors-arc">
+                  <label for="option-hors-arc">Hors de l'ARC</label>
+                </div>
+              </div>
+
+              <!-- COMMUNES DE L'ARC (caché par défaut) -->
+              <div id="communes-arc-section" class="form-group hidden">
+                <label for="commune-arc">Sélectionnez votre commune dans l'ARC :</label>
+                <select id="commune-arc" name="commune-arc">
+                  <option value="">-- Sélectionnez une commune --</option>
+                  <option value="Armancourt">Armancourt</option>
+                  <option value="Béthisy-Saint-Martin">Béthisy-Saint-Martin</option>
+                  <option value="Béthisy-Saint-Pierre">Béthisy-Saint-Pierre</option>
+                  <option value="Bienville">Bienville</option>
+                  <option value="Choisy-au-Bac">Choisy-au-Bac</option>
+                  <option value="Clairoix">Clairoix</option>
+                  <option value="Janville">Janville</option>
+                  <option value="Jaux">Jaux</option>
+                  <option value="Jonquières">Jonquières</option>
+                  <option value="Lachelle">Lachelle</option>
+                  <option value="Lacroix-Saint-Ouen">Lacroix-Saint-Ouen</option>
+                  <option value="Le Meux">Le Meux</option>
+                  <option value="Margny-lès-Compiègne">Margny-lès-Compiègne</option>
+                  <option value="Néry">Néry</option>
+                  <option value="Saint-Jean-aux-Bois">Saint-Jean-aux-Bois</option>
+                  <option value="Saint-Sauveur">Saint-Sauveur</option>
+                  <option value="Saint-Vaast-de-Longmont">Saint-Vaast-de-Longmont</option>
+                  <option value="Saintines">Saintines</option>
+                  <option value="Venette">Venette</option>
+                  <option value="Verberie">Verberie</option>
+                  <option value="Vieux-Moulin">Vieux-Moulin</option>
+                </select>
+              </div>
+
+              <!-- CHAMP POUR COMMUNE HORS ARC (caché par défaut) -->
+              <div id="hors-arc-section" class="form-group hidden">
+                <label for="commune-hors-arc">Nom de votre commune (hors ARC) :</label>
+                <input type="text" id="commune-hors-arc" name="commune-hors-arc" placeholder="Ex: Paris, Lille, Strasbourg...">
+              </div>
+
+              <!-- OPTION "NE SOUHAITE PAS RÉPONDRE" -->
+              <div id="no-response-section" class="no-response-option">
+                <div class="no-response-checkbox">
+                  <input type="checkbox" id="no-response-checkbox" name="no-response">
+                  <label for="no-response-checkbox">Je ne souhaite pas répondre à cette question</label>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -775,25 +846,35 @@
       }
 
       // ========================================
-      // GESTION DES FORMULAIRES DE LOCALISATION
+      // GESTION DES FORMULAIRES DE LOCALISATION (MODIFIÉE)
       // ========================================
       function setupLocationForm() {
         const habitationSelect = document.getElementById('habitation-compiegne');
         const quartiersSection = document.getElementById('quartiers-section');
-        const communesSection = document.getElementById('communes-section');
+        const nonCompiegneSection = document.getElementById('non-compiegne-section');
+        const communesArcSection = document.getElementById('communes-arc-section');
+        const horsArcSection = document.getElementById('hors-arc-section');
+        const noResponseCheckbox = document.getElementById('no-response-checkbox');
         const quartierSelect = document.getElementById('quartier');
-        const communeSelect = document.getElementById('commune');
+        const communeArcSelect = document.getElementById('commune-arc');
+        const communeHorsArcInput = document.getElementById('commune-hors-arc');
+        const locationTypeRadios = document.querySelectorAll('input[name="location-type"]');
 
         habitationSelect.addEventListener('change', function() {
           const value = this.value;
           
           // Masquer toutes les sections d'abord
           quartiersSection.classList.add('hidden');
-          communesSection.classList.add('hidden');
+          nonCompiegneSection.classList.add('hidden');
+          communesArcSection.classList.add('hidden');
+          horsArcSection.classList.add('hidden');
           
           // Effacer les sélections
           quartierSelect.value = '';
-          communeSelect.value = '';
+          communeArcSelect.value = '';
+          communeHorsArcInput.value = '';
+          noResponseCheckbox.checked = false;
+          locationTypeRadios.forEach(radio => radio.checked = false);
           
           // Effacer les surbrillances
           clearHighlights();
@@ -801,7 +882,52 @@
           if (value === 'oui') {
             quartiersSection.classList.remove('hidden');
           } else if (value === 'non') {
-            communesSection.classList.remove('hidden');
+            nonCompiegneSection.classList.remove('hidden');
+          }
+        });
+
+        // Gestion des boutons radio pour "Non Compiègne"
+        locationTypeRadios.forEach(radio => {
+          radio.addEventListener('change', function() {
+            const value = this.value;
+            
+            // Masquer les deux sections
+            communesArcSection.classList.add('hidden');
+            horsArcSection.classList.add('hidden');
+            
+            // Effacer les valeurs
+            communeArcSelect.value = '';
+            communeHorsArcInput.value = '';
+            
+            // Effacer les surbrillances
+            clearHighlights();
+            
+            if (value === 'arc') {
+              communesArcSection.classList.remove('hidden');
+            } else if (value === 'hors-arc') {
+              horsArcSection.classList.remove('hidden');
+            }
+          });
+        });
+
+        // Gestion de la case "Ne souhaite pas répondre"
+        noResponseCheckbox.addEventListener('change', function() {
+          if (this.checked) {
+            // Désactiver les autres options
+            locationTypeRadios.forEach(radio => {
+              radio.checked = false;
+              radio.disabled = true;
+            });
+            communesArcSection.classList.add('hidden');
+            horsArcSection.classList.add('hidden');
+            communeArcSelect.value = '';
+            communeHorsArcInput.value = '';
+            clearHighlights();
+          } else {
+            // Réactiver les autres options
+            locationTypeRadios.forEach(radio => {
+              radio.disabled = false;
+            });
           }
         });
 
@@ -814,7 +940,7 @@
           }
         });
 
-        communeSelect.addEventListener('change', function() {
+        communeArcSelect.addEventListener('change', function() {
           const commune = this.value;
           if (commune) {
             highlightArea(commune, 'NOM_2'); // Utilise le champ 'NOM_2' pour les communes
@@ -1061,7 +1187,7 @@
       }
 
 // ========================================
-// BOUTON SUIVANT - SOUMISSION + REDIRECTION
+// BOUTON SUIVANT - SOUMISSION + REDIRECTION (MODIFIÉ)
 // ========================================
 document
   .getElementById("submit-btn")
@@ -1088,7 +1214,10 @@ document
       return;
     }
 
-    // 2. Vérifier la sélection de quartier/commune selon la réponse
+    // 2. Vérifier la sélection selon la réponse
+    let noResponse = false;
+    let isHorsArc = false;
+    
     if (habitationCompiegne === 'oui') {
       const quartier = document.getElementById('quartier').value;
       if (!quartier) {
@@ -1097,22 +1226,61 @@ document
         return;
       }
     } else if (habitationCompiegne === 'non') {
-      const commune = document.getElementById('commune').value;
-      if (!commune) {
-        showError("⚠️ Veuillez sélectionner votre commune.");
-        resetButtonState();
-        return;
+      // Vérifier si la case "Ne souhaite pas répondre" est cochée
+      const noResponseCheckbox = document.getElementById('no-response-checkbox');
+      noResponse = noResponseCheckbox.checked;
+      
+      if (noResponse) {
+        // Si l'utilisateur ne souhaite pas répondre, on passe directement
+        // Pas besoin de vérifier les autres champs
+      } else {
+        // Vérifier si une option est sélectionnée
+        const locationType = document.querySelector('input[name="location-type"]:checked');
+        if (!locationType) {
+          showError("⚠️ Veuillez indiquer si vous habitez dans l'ARC ou hors ARC.");
+          resetButtonState();
+          return;
+        }
+
+        const locationValue = locationType.value;
+        
+        if (locationValue === 'arc') {
+          const communeArc = document.getElementById('commune-arc').value;
+          if (!communeArc) {
+            showError("⚠️ Veuillez sélectionner votre commune dans l'ARC.");
+            resetButtonState();
+            return;
+          }
+        } else if (locationValue === 'hors-arc') {
+          isHorsArc = true;
+          const communeHorsArc = document.getElementById('commune-hors-arc').value.trim();
+          if (!communeHorsArc) {
+            showError("⚠️ Veuillez saisir le nom de votre commune (hors ARC).");
+            resetButtonState();
+            return;
+          }
+        }
       }
     }
 
-    // 3. Vérifier la carte 1 (habitation)
-    const habitationCells = Array.from(gridData1.values()).filter(
-      (item) => item.habitation
-    );
-    if (habitationCells.length === 0) {
-      showError("⚠️ Veuillez sélectionner votre lieu d'habitation sur la carte avant de continuer.");
-      resetButtonState();
-      return;
+    // 3. Vérifier la carte 1 (habitation) - SAUF SI NE SOUHAITE PAS RÉPONDRE OU HORS ARC
+    // Déterminer si on doit vérifier la carte
+    const shouldCheckMap = !noResponse && !isHorsArc && habitationCompiegne !== 'non';
+    
+    if (!noResponse && !isHorsArc) {
+      const habitationCells = Array.from(gridData1.values()).filter(
+        (item) => item.habitation
+      );
+      
+      // Si Compiègne ou ARC, vérifier la sélection sur la carte
+      if (habitationCompiegne === 'oui' || 
+          (habitationCompiegne === 'non' && !noResponse && !isHorsArc)) {
+        if (habitationCells.length === 0) {
+          showError("⚠️ Veuillez sélectionner votre lieu d'habitation sur la carte avant de continuer.");
+          resetButtonState();
+          return;
+        }
+      }
     }
 
     // ========================================
@@ -1125,23 +1293,61 @@ document
     submitBtn.disabled = true;
 
     try {
-      // RÉCUPÉRER LES DONNÉES
+      // RÉCUPÉRER LES DONNÉES (MODIFIÉ)
       const habitationCompiegne = document.getElementById('habitation-compiegne').value;
       const quartier = document.getElementById('quartier').value;
-      const commune = document.getElementById('commune').value;
+      const noResponseCheckbox = document.getElementById('no-response-checkbox');
+      const noResponse = noResponseCheckbox.checked;
+      
+      // Variables pour les nouvelles options
+      let commune = null;
+      let horsArc = null;
+      let locationType = null;
+
+      if (habitationCompiegne === 'oui') {
+        // Si Compiègne : quartier est déjà défini
+      } else if (habitationCompiegne === 'non') {
+        if (noResponse) {
+          // Si ne souhaite pas répondre
+          locationType = 'no_response';
+        } else {
+          const locationTypeRadio = document.querySelector('input[name="location-type"]:checked');
+          if (locationTypeRadio) {
+            locationType = locationTypeRadio.value;
+            
+            if (locationType === 'arc') {
+              commune = document.getElementById('commune-arc').value;
+            } else if (locationType === 'hors-arc') {
+              horsArc = document.getElementById('commune-hors-arc').value.trim();
+            }
+          }
+        }
+      }
+
       // Ajouter 1 heure pour compenser le décalage UTC
       const now = new Date();
       const adjustedDate = new Date(now.getTime() + (60 * 60 * 1000)); // +1 heure
+
+      // Récupérer la sélection sur la carte si elle existe et si nécessaire
+      const habitationCells = Array.from(gridData1.values()).filter(
+        (item) => item.habitation
+      );
+      
+      // Déterminer si on envoie la sélection sur la carte
+      let habitationSelection = null;
+      if (!noResponse && !isHorsArc && habitationCells.length > 0) {
+        habitationSelection = createCombinedText(habitationCells[0]);
+      }
 
       const formData = {
         commentaire: document.getElementById("commentaire").value || null,
         habitation_compiegne: habitationCompiegne,
         quartier: quartier || null,
         commune: commune || null,
-        habitation:
-          habitationCells.length > 0
-            ? createCombinedText(habitationCells[0])
-            : null,
+        hors_arc: horsArc || null,
+        location_type: locationType || null,
+        no_response: noResponse || false,
+        habitation: habitationSelection, // Peut être null si ne souhaite pas répondre ou hors ARC
         submitted_at: adjustedDate.toISOString(),
       };
       
